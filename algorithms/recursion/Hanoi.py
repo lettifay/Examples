@@ -1,3 +1,5 @@
+# Tower of Hanio problem
+
 def Hanoi(n,src_loc,tmp_loc,dst_loc):
     if n == 1:
         print src_loc,'->',dst_loc
