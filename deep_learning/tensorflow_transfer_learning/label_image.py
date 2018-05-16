@@ -79,12 +79,16 @@ def load_labels(filename):
   return [line.rstrip() for line in tf.gfile.GFile(filename)]
 
 
-def load_graph(filename):
-  """Unpersists graph from file as default graph."""
-  with tf.gfile.FastGFile(filename, 'rb') as f:
-    graph_def = tf.GraphDef()
+def load_graph(model_file):
+  graph = tf.Graph()
+  graph_def = tf.GraphDef()
+
+  with open(model_file, "rb") as f:
     graph_def.ParseFromString(f.read())
-    tf.import_graph_def(graph_def, name='')
+  with graph.as_default():
+    tf.import_graph_def(graph_def)
+
+  return graph
 
 
 def run_graph(image_data, labels, input_layer_name, output_layer_name,
